@@ -9,7 +9,8 @@ transition: slide-left
 fonts:
   provider: none
 exportFilename: Presentacion-Prompt-Engineering
-download: true
+download: /presentacion/Presentacion-Prompt-Engineering.pdf
+routerMode: hash
 layout: default
 class: dark
 ---

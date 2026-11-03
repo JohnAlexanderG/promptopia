@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "slidev --open",
     "build": "slidev build",
-    "export": "slidev export --output Presentacion-Prompt-Engineering.pdf"
+    "build:web": "slidev build --base /presentacion/ --out ../../public/presentacion",
+    "export": "slidev export --output public/Presentacion-Prompt-Engineering.pdf"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
