@@ -1,0 +1,18 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Promptopia necesita un proceso Node persistente (Socket.IO + salas en memoria),
+# por eso es un Web Service y no un sitio estático.
+services:
+  - type: web
+    name: promptopia
+    runtime: node
+    plan: free
+    branch: main
+    autoDeploy: true
+    # Sin NODE_ENV=production en el build: así se instalan las devDependencies (tsx, tailwind).
+    buildCommand: npm ci && npm run build
+    # "npm start" = NODE_ENV=production tsx server.ts (escucha en $PORT, que Render asigna).
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
