@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "next build --webpack",
+    "build": "npm run build:presentacion && next build --webpack",
     "start": "NODE_ENV=production tsx server.ts",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
