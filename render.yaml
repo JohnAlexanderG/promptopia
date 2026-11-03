@@ -8,9 +8,9 @@ services:
     plan: free
     branch: main
     autoDeploy: true
-    # Compila primero la presentación (Slidev) en public/presentacion; luego la app.
+    # "npm run build" compila primero la presentación (Slidev) en public/presentacion y luego la app.
     # Sin NODE_ENV=production en el build: así se instalan las devDependencies (tsx, tailwind).
-    buildCommand: npm ci && npm run build:presentacion && npm run build
+    buildCommand: npm ci && npm run build
     # "npm start" = NODE_ENV=production tsx server.ts (escucha en $PORT, que Render asigna).
     startCommand: npm start
     healthCheckPath: /
