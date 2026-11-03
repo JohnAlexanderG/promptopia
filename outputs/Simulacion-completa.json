@@ -1,0 +1,331 @@
+{
+  "room": "5A87D3",
+  "mode": "Simulación acelerada por la interfaz: 20 sesiones de navegador en un equipo y un presentador; cierre manual sin esperar 30 minutos.",
+  "checks": [
+    "20 jugadores y parcelas únicas; ingreso 21 rechazado.",
+    "20 prompts iniciales obtuvieron 0/4 y la construcción quedó bloqueada.",
+    "20 prompts mejorados obtuvieron 4/4 y desbloquearon la construcción.",
+    "20 construcciones y saldo de 10 créditos por jugador; tablero del presentador sincronizado.",
+    "3 recargas recuperaron identidad, parcela, edificio, puntuación y saldo sin duplicar jugadores.",
+    "Evento sincronizado en las 20 vistas: 50/50 créditos, 10 aportes únicos y sin cobros a los demás.",
+    "Las 20 vistas recibieron el cierre; aportes deshabilitados y edificios conservados."
+  ],
+  "players": [
+    {
+      "plot": 1,
+      "name": "Ana",
+      "role": "urbanista",
+      "building": "una biblioteca",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 2,
+      "name": "Bruno",
+      "role": "ingeniero",
+      "building": "una central solar",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 3,
+      "name": "Camila",
+      "role": "ecologista",
+      "building": "un jardín comunitario",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 4,
+      "name": "Diego",
+      "role": "urbanista",
+      "building": "una biblioteca",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 5,
+      "name": "Elena",
+      "role": "ingeniero",
+      "building": "una central solar",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 6,
+      "name": "Felipe",
+      "role": "ecologista",
+      "building": "un jardín comunitario",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 7,
+      "name": "Gabriela",
+      "role": "urbanista",
+      "building": "una biblioteca",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 8,
+      "name": "Hugo",
+      "role": "ingeniero",
+      "building": "una central solar",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 9,
+      "name": "Isabel",
+      "role": "ecologista",
+      "building": "un jardín comunitario",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 10,
+      "name": "Julián",
+      "role": "urbanista",
+      "building": "una biblioteca",
+      "score": 4,
+      "credits": 5,
+      "contribution": 5
+    },
+    {
+      "plot": 11,
+      "name": "Karen",
+      "role": "ingeniero",
+      "building": "una central solar",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    },
+    {
+      "plot": 12,
+      "name": "Lucas",
+      "role": "ecologista",
+      "building": "un jardín comunitario",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    },
+    {
+      "plot": 13,
+      "name": "María",
+      "role": "urbanista",
+      "building": "una biblioteca",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    },
+    {
+      "plot": 14,
+      "name": "Nicolás",
+      "role": "ingeniero",
+      "building": "una central solar",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    },
+    {
+      "plot": 15,
+      "name": "Olivia",
+      "role": "ecologista",
+      "building": "un jardín comunitario",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    },
+    {
+      "plot": 16,
+      "name": "Pablo",
+      "role": "urbanista",
+      "building": "una biblioteca",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    },
+    {
+      "plot": 17,
+      "name": "Raquel",
+      "role": "ingeniero",
+      "building": "una central solar",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    },
+    {
+      "plot": 18,
+      "name": "Santiago",
+      "role": "ecologista",
+      "building": "un jardín comunitario",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    },
+    {
+      "plot": 19,
+      "name": "Teresa",
+      "role": "urbanista",
+      "building": "una biblioteca",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    },
+    {
+      "plot": 20,
+      "name": "Valentina",
+      "role": "ingeniero",
+      "building": "una central solar",
+      "score": 4,
+      "credits": 10,
+      "contribution": 0
+    }
+  ],
+  "prompts": [
+    {
+      "name": "Ana",
+      "role": "urbanista",
+      "prompt": "Actúa como urbanista. Diseña una biblioteca para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Bruno",
+      "role": "ingeniero",
+      "prompt": "Actúa como ingeniero. Diseña una central solar para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Camila",
+      "role": "ecologista",
+      "prompt": "Actúa como ecologista. Diseña un jardín comunitario para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Diego",
+      "role": "urbanista",
+      "prompt": "Actúa como urbanista. Diseña una biblioteca para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Elena",
+      "role": "ingeniero",
+      "prompt": "Actúa como ingeniero. Diseña una central solar para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Felipe",
+      "role": "ecologista",
+      "prompt": "Actúa como ecologista. Diseña un jardín comunitario para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Gabriela",
+      "role": "urbanista",
+      "prompt": "Actúa como urbanista. Diseña una biblioteca para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Hugo",
+      "role": "ingeniero",
+      "prompt": "Actúa como ingeniero. Diseña una central solar para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Isabel",
+      "role": "ecologista",
+      "prompt": "Actúa como ecologista. Diseña un jardín comunitario para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Julián",
+      "role": "urbanista",
+      "prompt": "Actúa como urbanista. Diseña una biblioteca para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Karen",
+      "role": "ingeniero",
+      "prompt": "Actúa como ingeniero. Diseña una central solar para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Lucas",
+      "role": "ecologista",
+      "prompt": "Actúa como ecologista. Diseña un jardín comunitario para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "María",
+      "role": "urbanista",
+      "prompt": "Actúa como urbanista. Diseña una biblioteca para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Nicolás",
+      "role": "ingeniero",
+      "prompt": "Actúa como ingeniero. Diseña una central solar para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Olivia",
+      "role": "ecologista",
+      "prompt": "Actúa como ecologista. Diseña un jardín comunitario para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Pablo",
+      "role": "urbanista",
+      "prompt": "Actúa como urbanista. Diseña una biblioteca para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Raquel",
+      "role": "ingeniero",
+      "prompt": "Actúa como ingeniero. Diseña una central solar para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Santiago",
+      "role": "ecologista",
+      "prompt": "Actúa como ecologista. Diseña un jardín comunitario para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Teresa",
+      "role": "urbanista",
+      "prompt": "Actúa como urbanista. Diseña una biblioteca para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    },
+    {
+      "name": "Valentina",
+      "role": "ingeniero",
+      "prompt": "Actúa como ingeniero. Diseña una central solar para 20 habitantes con un presupuesto máximo de 1000 créditos. Presenta la propuesta en una tabla con pasos, materiales y criterios de éxito.",
+      "score": 4
+    }
+  ],
+  "summary": {
+    "players": 20,
+    "buildings": 20,
+    "libraries": 7,
+    "solarPlants": 7,
+    "gardens": 6,
+    "event": 50,
+    "eventGoal": 50,
+    "initialCredits": 400,
+    "buildingCost": 200,
+    "eventCost": 50,
+    "remainingCredits": 150,
+    "phase": "finished"
+  }
+}

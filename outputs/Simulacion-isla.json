@@ -1,0 +1,195 @@
+{
+  "sala": "5394A0",
+  "modo": "Simulación acelerada en 20 pestañas de jugador y una de presentador",
+  "estado": "cerrada",
+  "edificios": {
+    "bibliotecas": 7,
+    "centralesSolares": 7,
+    "jardines": 6,
+    "total": 20
+  },
+  "prompts": {
+    "inicial": 0,
+    "final": 4,
+    "total": 20
+  },
+  "evento": {
+    "progreso": 50,
+    "meta": 50,
+    "aportantes": 10
+  },
+  "creditos": {
+    "iniciales": 400,
+    "construccion": 200,
+    "evento": 50,
+    "restantes": 150
+  },
+  "jugadores": [
+    {
+      "parcela": 1,
+      "nombre": "Ana",
+      "rol": "urbanista",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 2,
+      "nombre": "Bruno",
+      "rol": "ingeniero",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 3,
+      "nombre": "Camila",
+      "rol": "ecologista",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 4,
+      "nombre": "Diego",
+      "rol": "urbanista",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 5,
+      "nombre": "Elena",
+      "rol": "ingeniero",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 6,
+      "nombre": "Felipe",
+      "rol": "ecologista",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 7,
+      "nombre": "Gabriela",
+      "rol": "urbanista",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 8,
+      "nombre": "Hugo",
+      "rol": "ingeniero",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 9,
+      "nombre": "Isabel",
+      "rol": "ecologista",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 10,
+      "nombre": "Julián",
+      "rol": "urbanista",
+      "puntuacion": 4,
+      "creditos": 5,
+      "aporte": 5
+    },
+    {
+      "parcela": 11,
+      "nombre": "Karen",
+      "rol": "ingeniero",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    },
+    {
+      "parcela": 12,
+      "nombre": "Lucas",
+      "rol": "ecologista",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    },
+    {
+      "parcela": 13,
+      "nombre": "María",
+      "rol": "urbanista",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    },
+    {
+      "parcela": 14,
+      "nombre": "Nicolás",
+      "rol": "ingeniero",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    },
+    {
+      "parcela": 15,
+      "nombre": "Olivia",
+      "rol": "ecologista",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    },
+    {
+      "parcela": 16,
+      "nombre": "Pablo",
+      "rol": "urbanista",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    },
+    {
+      "parcela": 17,
+      "nombre": "Raquel",
+      "rol": "ingeniero",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    },
+    {
+      "parcela": 18,
+      "nombre": "Santiago",
+      "rol": "ecologista",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    },
+    {
+      "parcela": 19,
+      "nombre": "Teresa",
+      "rol": "urbanista",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    },
+    {
+      "parcela": 20,
+      "nombre": "Valentina",
+      "rol": "ingeniero",
+      "puntuacion": 4,
+      "creditos": 10,
+      "aporte": 0
+    }
+  ],
+  "observaciones": [
+    "Las 20 vistas recibieron la construcción, el evento y el cierre.",
+    "Recargar la vista de Ana conservó edificio, puntuación y saldo.",
+    "El diálogo nativo de cierre bloqueó la automatización y desconectó al presentador; se recuperó al recargar y el usuario completó el cierre desde la interfaz.",
+    "Ensayo acelerado; no se esperaron los 30 minutos reales ni se abrió una reunión de Google Meet."
+  ]
+}
