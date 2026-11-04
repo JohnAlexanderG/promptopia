@@ -29,6 +29,9 @@ export default function GameClient() {
   const [code, setCode] = useState('');
   const [role, setRole] = useState<Role>('urbanista');
   const [district, setDistrict] = useState<District>('centro');
+  const [counts, setCounts] = useState<Partial<Record<Role, number>>>({});
+  /** Once the person picks a role themselves, the form stops suggesting one. */
+  const picked = useRef(false);
   const [view, setView] = useState<'2d' | '3d'>('2d');
   const [panel, setPanel] = useState<Panel>('main');
   const close = useCallback(() => setPanel(null), []);
@@ -72,11 +75,19 @@ export default function GameClient() {
   }, [receive]);
 
   useEffect(() => {
-    if (!connected || !/^[A-F0-9]{6}$/.test(code)) { setDistrict('centro'); return; }
-    socket.current?.timeout(5000).emit('room:peek', code, (err: Error | null, reply: { ok: boolean; district?: District }) => {
+    if (!connected || !/^[A-F0-9]{6}$/.test(code)) { setDistrict('centro'); setCounts({}); return; }
+    const peek = () => socket.current?.timeout(5000).emit('room:peek', code, (err: Error | null, reply: { ok: boolean; district?: District; counts?: Partial<Record<Role, number>> }) => {
       const next = !err && reply?.ok && reply.district && Object.hasOwn(DISTRICTS, reply.district) ? reply.district : 'centro';
-      setDistrict(next); setRole(current => DISTRICTS[next].roles.includes(current) ? current : DISTRICTS[next].roles[0]);
+      const taken = (!err && reply?.ok && reply.counts) || {};
+      // Suggest the least-chosen role (catalog order breaks ties) until the person picks one.
+      const least = [...DISTRICTS[next].roles].sort((a, b) => (taken[a] ?? 0) - (taken[b] ?? 0))[0];
+      setDistrict(next); setCounts(taken);
+      setRole(current => picked.current && DISTRICTS[next].roles.includes(current) ? current : least);
     });
+    peek();
+    // Counts change while people join, so refresh them while the form is open.
+    const interval = setInterval(peek, 5000);
+    return () => clearInterval(interval);
   }, [code, connected]);
   async function act(action: Action, extra: Record<string, unknown> = {}) {
     if (!socket.current?.connected || pending || !ready) return;
@@ -112,7 +123,7 @@ export default function GameClient() {
     {messages}
     <main className="landing">
       <section className="intro"><span className="eyebrow">UNA EXPERIENCIA PARA CONSTRUIR JUNTOS</span><h1>Tu próxima idea<br />puede ser <em>una ciudad.</em></h1><p>Tienes una parcela y 20 créditos. Escribe un buen prompt, desbloquea tu edificio y construye una ciudad con tu equipo.</p><div className="intro-facts"><span><b>{MAX_PLAYERS}</b> habitantes</span><span><b>30</b> minutos</span><span><b>01</b> ciudad compartida</span></div><CityScene preview /><p className="small-note">Explora la isla y prueba una construcción antes de entrar.</p></section>
-      <section className="entry-card"><div className="entry-badge">TU AVENTURA EMPIEZA AQUÍ</div><span className="eyebrow">TU PARCELA TE ESPERA</span><h2>Entra a la ciudad</h2><p className="muted">Pide el código al presentador y elige tu papel.</p><form onSubmit={e => { e.preventDefault(); void act('join', { code: code.trim(), name: name.trim(), role }); }}><label htmlFor="code">Código de la sala</label><input id="code" placeholder="Ej. A1B2C3" value={code} maxLength={6} minLength={6} pattern="[A-Fa-f0-9]{6}" required onChange={e => setCode(e.target.value.toUpperCase())} className="code-input" autoComplete="off" /><label htmlFor="name">Tu nombre</label><input id="name" placeholder="¿Cómo te llamas?" value={name} minLength={2} maxLength={24} required onChange={e => setName(e.target.value)} autoComplete="given-name" /><label htmlFor="role">Tu rol en la ciudad</label><select id="role" value={role} onChange={e => setRole(e.target.value as Role)}>{DISTRICTS[district].roles.map(key => <option value={key} key={key}>{ROLES[key].icon} {ROLES[key].label} · {buildingName(district, key, 1)}</option>)}</select><button className="button primary full" disabled={disabled} type="submit">{pending ? 'Conectando…' : 'Encontrar mi parcela →'}</button></form><Journey /><div className="entry-divider">¿Vas a guiar la experiencia?</div><button className="button secondary full" disabled={disabled} onClick={() => void act('create')}>Crear sala de presentador</button><p className="small-note">Sin cuentas · Hasta {MAX_PLAYERS} jugadores · Evaluación por reglas</p></section>
+      <section className="entry-card"><div className="entry-badge">TU AVENTURA EMPIEZA AQUÍ</div><span className="eyebrow">TU PARCELA TE ESPERA</span><h2>Entra a la ciudad</h2><p className="muted">Pide el código al presentador y elige tu papel.</p><form onSubmit={e => { e.preventDefault(); void act('join', { code: code.trim(), name: name.trim(), role }); }}><label htmlFor="code">Código de la sala</label><input id="code" placeholder="Ej. A1B2C3" value={code} maxLength={6} minLength={6} pattern="[A-Fa-f0-9]{6}" required onChange={e => setCode(e.target.value.toUpperCase())} className="code-input" autoComplete="off" /><label htmlFor="name">Tu nombre</label><input id="name" placeholder="¿Cómo te llamas?" value={name} minLength={2} maxLength={24} required onChange={e => setName(e.target.value)} autoComplete="given-name" /><label htmlFor="role">Tu rol en la ciudad</label><select id="role" value={role} onChange={e => { picked.current = true; setRole(e.target.value as Role); }}>{DISTRICTS[district].roles.map(key => <option value={key} key={key}>{ROLES[key].icon} {ROLES[key].label} · {buildingName(district, key, 1)}{counts[key] ? ` · ${counts[key]} en la sala` : ''}</option>)}</select><button className="button primary full" disabled={disabled} type="submit">{pending ? 'Conectando…' : 'Encontrar mi parcela →'}</button></form><Journey /><div className="entry-divider">¿Vas a guiar la experiencia?</div><button className="button secondary full" disabled={disabled} onClick={() => void act('create')}>Crear sala de presentador</button><p className="small-note">Sin cuentas · Hasta {MAX_PLAYERS} jugadores · Evaluación por reglas</p></section>
     </main>
     <footer><span>PROMPTOPIA · APRENDEMOS CONSTRUYENDO</span><span>Las grandes ciudades empiezan con buenas preguntas.</span></footer>
   </div></MotionConfig>;

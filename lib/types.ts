@@ -13,7 +13,7 @@ export const EVENTS = [
 ] as const;
 export const CONTRIBUTION = 5;
 /** Room capacity: one plot per player (9 blocks × 4 plots). */
-export const MAX_PLAYERS = 36;
+export { MAX_PLAYERS, MAX_PLAYERS_WORDS } from './config';
 export type Check = { label: string; passed: boolean; hint: string; match?: string; advanced?: boolean };
 export type Evaluation = { score: number; bonus: number; checks: Check[] };
 export type Attempt = { prompt: string; score: number; bonus: number; at: number };

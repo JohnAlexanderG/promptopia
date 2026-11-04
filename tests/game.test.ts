@@ -2,9 +2,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { Game, evaluate } from '../lib/game';
 import { ALL_ROLES, ALL_MODELS, ROLES } from '../lib/catalog';
-import { MAX_PLAYERS } from '../lib/types';
+import { MAX_PLAYERS, MAX_PLAYERS_WORDS } from '../lib/types';
 import { existsSync, readdirSync, statSync } from 'node:fs';
-const good = 'Actúa como arquitecta. Diseña viviendas para 20 habitantes con presupuesto máximo de 1000 créditos. Responde en una tabla.';
+const good = `Actúa como arquitecta. Diseña viviendas para ${MAX_PLAYERS} habitantes con presupuesto máximo de 1000 créditos. Responde en una tabla.`;
 
 test(`${MAX_PLAYERS} parcelas únicas, plaza ${MAX_PLAYERS + 1} rechazada, roles y nombres validados`, () => {
   const game = new Game(), host = game.create();
@@ -66,7 +66,10 @@ test('eventos con meta escalada por habitantes en línea y misiones sucesivas', 
   assert.throws(() => game.act(host, 'event'), /todos los eventos/);
 });
 test('rúbrica: sinónimos, anti-trampa, criterios avanzados y pistas válidas', () => {
-  assert.equal(evaluate('Imagina que eres urbanista. Propón viviendas para veinte vecinos, en menos de 200 palabras, en viñetas.', 'urbanista').score, 4);
+  assert.equal(evaluate(`Imagina que eres urbanista. Propón viviendas para ${MAX_PLAYERS_WORDS} vecinos, en menos de 200 palabras, en viñetas.`, 'urbanista').score, 4);
+  // The task must name this city's size: the old 20-inhabitant city no longer counts.
+  assert.equal(evaluate(good.replace(String(MAX_PLAYERS), '20'), 'urbanista').checks[1].passed, false);
+  assert.equal(evaluate(good.replace(String(MAX_PLAYERS), 'veinte'), 'urbanista').checks[1].passed, false);
   const gamed = evaluate('actua como. viviendas disena 20 presupuesto. tabla 5', 'urbanista');
   assert.equal(gamed.checks[0].passed, false); assert.equal(gamed.checks[2].passed, false);
   const rich = evaluate(good + ' Dirigida a familias; debe incluir al menos 3 salas.', 'urbanista');
@@ -161,4 +164,43 @@ test('se usan todos los modelos del pack (si assets-source/ está presente)', { 
   const used = new Set(ALL_MODELS.map(id => id.startsWith('city_car') ? 'city_car' : id));
   const unused = readdirSync('assets-source/models').filter(f => f.endsWith('.fbx')).map(f => f.slice(0, -4)).filter(id => !used.has(id));
   assert.deepEqual(unused, []);
+});
+test('misión: una desconexión no la bloquea y la meta no supera la inicial', () => {
+  const game = new Game(), host = game.create();
+  const [ana, beto, carla] = ['Ana', 'Beto', 'Carla'].map(name => game.join(host.code, name, 'urbanista'));
+  for (const p of [ana, beto, carla]) game.presence(p, true);
+  game.act(host, 'start'); game.act(host, 'event');
+  assert.equal(game.snapshot(host).room.event.goal, 15);
+  game.act(ana, 'contribute'); game.act(beto, 'contribute');
+  assert.equal(game.snapshot(host).room.event.completed, 0);
+  game.presence(carla, false);
+  const event = game.snapshot(host).room.event;
+  assert.equal(event.goal, 10); assert.equal(event.completed, 1, 'se completa con quienes siguen en línea');
+  game.presence(carla, true);
+  assert.equal(game.snapshot(host).room.event.completed, 1, 'volver a conectarse no reabre la misión');
+});
+test('misión: reconectar devuelve la meta, sin pasar de la inicial', () => {
+  const game = new Game(), host = game.create();
+  const players = ['Ana', 'Beto', 'Carla'].map(name => game.join(host.code, name, 'urbanista'));
+  for (const p of players) game.presence(p, true);
+  game.act(host, 'start'); game.act(host, 'event');
+  game.presence(players[2], false); game.presence(players[1], false);
+  assert.equal(game.snapshot(host).room.event.goal, 5);
+  game.presence(players[1], true);
+  assert.equal(game.snapshot(host).room.event.goal, 10);
+  game.presence(players[2], true);
+  assert.equal(game.snapshot(host).room.event.goal, 15);
+});
+test('actividad: las entradas seguidas se agrupan y el registro guarda 50 líneas', () => {
+  const game = new Game(), host = game.create();
+  for (let i = 1; i <= 10; i++) game.join(host.code, `Persona ${i}`, 'urbanista');
+  let log = game.snapshot(host).room.log;
+  assert.equal(log[0], 'Persona 10, Persona 9 y 8 más se unieron a la ciudad.');
+  assert.equal(log.length, 2, 'una línea agrupada más el saludo inicial');
+  // Any other message ends the run: the next join starts a new line.
+  game.act(host, 'stage'); game.join(host.code, 'Zoe', 'urbanista');
+  assert.equal(game.snapshot(host).room.log[0], 'Zoe se unió a la ciudad.');
+  for (const p of game.snapshot(host).room.players) game.act(host, 'kick', p.id);
+  log = game.snapshot(host).room.log;
+  assert.equal(log.length, 15, 'cabe la actividad completa de la sala');
 });
