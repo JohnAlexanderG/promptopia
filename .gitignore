@@ -8,3 +8,6 @@ work/
 
 # Presentación compilada (se genera en el build)
 /public/presentacion/
+
+# macOS
+.DS_Store

@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Promptopia · Catálogo de edificios</title>
+<link rel="stylesheet" href="file:///Users/johnalexanderg/Documents/Codex/2026-10-30/referenced-chatgpt-conversation-this-is-an/outputs/presentacion-slidev/node_modules/@fontsource-variable/fraunces/index.css">
+<link rel="stylesheet" href="file:///Users/johnalexanderg/Documents/Codex/2026-10-30/referenced-chatgpt-conversation-this-is-an/outputs/presentacion-slidev/node_modules/@fontsource-variable/fraunces/wght-italic.css">
+<link rel="stylesheet" href="file:///Users/johnalexanderg/Documents/Codex/2026-10-30/referenced-chatgpt-conversation-this-is-an/outputs/presentacion-slidev/node_modules/@fontsource-variable/inter/index.css">
+<style>
+@page { size: A4 landscape; margin: 0; }
+:root { --ink:#15261e; --forest:#123628; --cream:#f7f3ea; --paper:#fffdf8; --line:#e4dccb; --green:#2e6b4f; --teal:#3f949c; --coral:#e2674f; --gold:#e9b23c; --slate:#5b6b63;
+  --serif:'Fraunces Variable', Georgia, serif; --sans:'Inter Variable', system-ui, sans-serif; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:var(--sans); color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.page { width:297mm; height:210mm; padding:12mm 15mm 14mm; background:var(--cream); position:relative; page-break-after:always; overflow:hidden; counter-increment:page; display:flex; flex-direction:column; }
+.page::after { content:'Promptopia · Noviembre 2026 · ' counter(page); position:absolute; bottom:6mm; right:15mm; font-size:8pt; color:var(--slate); }
+.kicker { font-size:8pt; letter-spacing:.18em; text-transform:uppercase; color:var(--green); font-weight:700; }
+h1,h2 { font-family:var(--serif); color:var(--forest); margin:0; font-weight:600; }
+h1 { font-size:38pt; line-height:1.05; margin:6mm 0 4mm; } h1 em { font-style:italic; color:var(--gold); }
+h2 { font-size:22pt; margin:1.5mm 0 1mm; display:flex; align-items:center; gap:3mm; }
+.ico { font-size:18pt; }
+.lede { margin:0 0 4mm; color:var(--slate); font-size:10pt; } .lede b { color:var(--forest); }
+.cover { flex-direction:row; align-items:center; gap:12mm; background:var(--forest); }
+.cover > div:first-child { flex:1; } .cover h1 { color:var(--cream); } .cover .kicker { color:var(--gold); } .cover .lede { color:#cfe3d8; font-size:11pt; }
+.cover::after { color:#9fbfae; }
+.facts { list-style:none; padding:0; margin:0 0 6mm; display:flex; gap:9mm; }
+.facts b { display:block; font-family:var(--serif); font-size:28pt; color:var(--gold); line-height:1; } .facts span { font-size:8.5pt; color:#cfe3d8; }
+.how { color:#e8f0ea; font-size:9.5pt; line-height:1.6; } .how b { color:var(--gold); }
+.cover-grid { flex:1.25; display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; }
+.cover-grid img { width:100%; background:#f7f3ea; border-radius:3mm; }
+.variants { flex:1; display:grid; gap:4mm; min-height:0; }
+.n1 .variants { grid-template-columns:1fr; } .n2 .variants { grid-template-columns:1fr; grid-template-rows:1fr 1fr; }
+.n3 .variants, .n4 .variants { grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
+.n5 .variants { grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; }
+.variant { background:var(--paper); border:1px solid var(--line); border-radius:3mm; padding:3mm 4mm; display:flex; flex-direction:column; min-height:0; }
+.islands { display:flex; gap:1.5mm; flex-wrap:wrap; margin-bottom:2mm; }
+.islands span { font-size:7pt; letter-spacing:.08em; text-transform:uppercase; font-weight:700; color:var(--green); background:#e7efe3; padding:1mm 2mm; border-radius:5mm; }
+.pair { flex:1; display:flex; align-items:stretch; gap:2mm; min-height:0; }
+.to { align-self:center; color:var(--coral); font-size:16pt; }
+.card { flex:1; margin:0; display:flex; flex-direction:column; min-height:0; position:relative; }
+.pic { flex:1; min-height:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(#e6f4f6,#f4f8ee); border-radius:2mm; overflow:hidden; }
+.pic img { max-width:100%; max-height:100%; object-fit:contain; }
+.up .pic { box-shadow:inset 0 0 0 1.2mm var(--gold); }
+.lvl { position:absolute; top:1.5mm; left:1.5mm; font-size:6.5pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; background:var(--forest); color:var(--cream); padding:.8mm 2mm; border-radius:5mm; z-index:1; }
+.up .lvl { background:var(--gold); color:var(--forest); }
+figcaption { padding-top:1.8mm; font-size:8pt; color:var(--slate); line-height:1.35; }
+figcaption b { display:block; font-size:10pt; color:var(--forest); }
+figcaption small { display:block; font-size:7.3pt; color:var(--coral); }
+.n5 figcaption b, .n4 figcaption b, .n3 figcaption b { font-size:8.8pt; }
+</style></head><body><section class="page cover"><div>
+  <span class="kicker">Promptopia · Catálogo de edificios</span>
+  <h1>Cada construcción,<br><em>nivel a nivel</em></h1>
+  <p class="lede">Lo que levanta cada rol en su parcela: el edificio de nivel 1 al construir y el de nivel 2 al mejorar, con las versiones propias de cada isla.</p>
+  <ul class="facts"><li><b>12</b><span>roles</span></li><li><b>32</b><span>edificios distintos</span></li><li><b>5</b><span>islas</span></li></ul>
+  <p class="how"><b>Nivel 1:</b> 3 de 4 criterios y 10 créditos. <b>Nivel 2:</b> 4 de 4 con al menos una estrella, sin coste.</p></div>
+  <div class="cover-grid"><img src="img/industrial_wearhouse_02.png"><img src="img/industrial_power_plant.png"><img src="img/city_joes_java.png"><img src="img/french_bistro.png"><img src="img/japanese_house_01.png"><img src="img/japanese_bilboard_building_01.png"></div>
+</section><section class="page role n4">
+    <header><span class="kicker">Rol 1 de 12</span><h2><span class="ico">🏠</span>Urbanista</h2>
+      <p class="lede">Diseña viviendas para una ciudad de 20 habitantes. <b>4 versiones según la isla.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Industrial</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_residential_01.png" alt="Viviendas"></div>
+    <figcaption><b>Viviendas</b><span>≈ 8 m de alto · 7 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_apartment_block.png" alt="Bloque de apartamentos"></div>
+    <figcaption><b>Bloque de apartamentos</b><span>≈ 10 m de alto · 7 m de ancho</span></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Little Tokyo</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/japanese_house_01.png" alt="Casa tradicional"></div>
+    <figcaption><b>Casa tradicional</b><span>≈ 9 m de alto · 9 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/japanese_bilboard_building_01.png" alt="Edificio de neón"></div>
+    <figcaption><b>Edificio de neón</b><span>≈ 25 m de alto · 11 m de ancho</span></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Barrio parisino</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/french_tallhouse_02.png" alt="Casa parisina"></div>
+    <figcaption><b>Casa parisina</b><span>≈ 13 m de alto · 7 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/french_tallhouse_01.png" alt="Edificio de balcones"></div>
+    <figcaption><b>Edificio de balcones</b><span>≈ 18 m de alto · 8 m de ancho</span></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Granja</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_residential_02.png" alt="Casa de campo"></div>
+    <figcaption><b>Casa de campo</b><span>≈ 9 m de alto · 10 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_residential_03.png" alt="Casa grande de campo"></div>
+    <figcaption><b>Casa grande de campo</b><span>≈ 8 m de alto · 10 m de ancho</span></figcaption></figure></div></div></div>
+  </section><section class="page role n3">
+    <header><span class="kicker">Rol 2 de 12</span><h2><span class="ico">⚡</span>Ingeniero</h2>
+      <p class="lede">Diseña una central de energía que abastezca a 20 habitantes. <b>3 versiones según la isla.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Little Tokyo</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/industrial_wearhouse_02.png" alt="Subestación eléctrica"></div>
+    <figcaption><b>Subestación eléctrica</b><span>≈ 6 m de alto · 24 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/industrial_power_plant.png" alt="Central eléctrica"></div>
+    <figcaption><b>Central eléctrica</b><span>≈ 35 m de alto · 48 m de ancho</span><small>Se levanta a tamaño real en la manzana reservada de la isla.</small></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Granja</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/farm_silo.png" alt="Silo de biogás"></div>
+    <figcaption><b>Silo de biogás</b><span>≈ 7 m de alto · 3 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/industrial_power_plant.png" alt="Central eléctrica"></div>
+    <figcaption><b>Central eléctrica</b><span>≈ 35 m de alto · 48 m de ancho</span><small>Se levanta a tamaño real en la manzana reservada de la isla.</small></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Industrial</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/industrial_wearhouse_01.png" alt="Subestación eléctrica"></div>
+    <figcaption><b>Subestación eléctrica</b><span>≈ 13 m de alto · 20 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/industrial_power_plant.png" alt="Central eléctrica"></div>
+    <figcaption><b>Central eléctrica</b><span>≈ 35 m de alto · 48 m de ancho</span><small>Se levanta a tamaño real en la manzana reservada de la isla.</small></figcaption></figure></div></div></div>
+  </section><section class="page role n1">
+    <header><span class="kicker">Rol 3 de 12</span><h2><span class="ico">🌱</span>Ecologista</h2>
+      <p class="lede">Diseña un huerto comunitario para una ciudad de 20 habitantes. <b>El mismo edificio en todas sus islas.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Barrio parisino</span><span>Granja</span><span>Industrial</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/farm_land_01.png" alt="Huerto comunitario"></div>
+    <figcaption><b>Huerto comunitario</b><span>a ras de suelo · 11 m de ancho</span><small>Un campo de 2 × 2 parcelas de cultivo.</small></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/farm_house_01.png" alt="Granja ecológica"></div>
+    <figcaption><b>Granja ecológica</b><span>≈ 6 m de alto · 11 m de ancho</span></figcaption></figure></div></div></div>
+  </section><section class="page role n2">
+    <header><span class="kicker">Rol 4 de 12</span><h2><span class="ico">☕</span>Barista</h2>
+      <p class="lede">Diseña una cafetería de barrio para 20 habitantes. <b>2 versiones según la isla.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Barrio parisino</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_joes_java.png" alt="Cafetería"></div>
+    <figcaption><b>Cafetería</b><span>≈ 8 m de alto · 6 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/french_bistro.png" alt="Bistró"></div>
+    <figcaption><b>Bistró</b><span>≈ 10 m de alto · 10 m de ancho</span></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Little Tokyo</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_joes_java.png" alt="Cafetería"></div>
+    <figcaption><b>Cafetería</b><span>≈ 8 m de alto · 6 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/japanese_house_01.png" alt="Casa de té"></div>
+    <figcaption><b>Casa de té</b><span>≈ 9 m de alto · 9 m de ancho</span></figcaption></figure></div></div></div>
+  </section><section class="page role n5">
+    <header><span class="kicker">Rol 5 de 12</span><h2><span class="ico">🍔</span>Cocinero</h2>
+      <p class="lede">Diseña un restaurante para alimentar a 20 habitantes. <b>5 versiones según la isla.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_wiener_world.png" alt="Puesto de comida"></div>
+    <figcaption><b>Puesto de comida</b><span>≈ 6 m de alto · 9 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_burger_barn.png" alt="Restaurante"></div>
+    <figcaption><b>Restaurante</b><span>≈ 6 m de alto · 7 m de ancho</span></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Little Tokyo</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_wiener_world.png" alt="Puesto de comida"></div>
+    <figcaption><b>Puesto de comida</b><span>≈ 6 m de alto · 9 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_doodle_doos.png" alt="Yakitori"></div>
+    <figcaption><b>Yakitori</b><span>≈ 6 m de alto · 6 m de ancho</span></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Barrio parisino</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_pancake_palooza.png" alt="Crepería"></div>
+    <figcaption><b>Crepería</b><span>≈ 5 m de alto · 7 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_burger_barn.png" alt="Restaurante"></div>
+    <figcaption><b>Restaurante</b><span>≈ 6 m de alto · 7 m de ancho</span></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Granja</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_doodle_doos.png" alt="Pollería"></div>
+    <figcaption><b>Pollería</b><span>≈ 6 m de alto · 6 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_burger_barn.png" alt="Restaurante"></div>
+    <figcaption><b>Restaurante</b><span>≈ 6 m de alto · 7 m de ancho</span></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Industrial</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_wiener_world.png" alt="Puesto de comida"></div>
+    <figcaption><b>Puesto de comida</b><span>≈ 6 m de alto · 9 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_pancake_palooza.png" alt="Comedor"></div>
+    <figcaption><b>Comedor</b><span>≈ 5 m de alto · 7 m de ancho</span></figcaption></figure></div></div></div>
+  </section><section class="page role n1">
+    <header><span class="kicker">Rol 6 de 12</span><h2><span class="ico">🐾</span>Veterinaria</h2>
+      <p class="lede">Diseña una clínica de mascotas para las familias de 20 habitantes. <b>El mismo edificio en todas sus islas.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Barrio parisino</span><span>Granja</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_paws_n_claws.png" alt="Clínica de mascotas"></div>
+    <figcaption><b>Clínica de mascotas</b><span>≈ 5 m de alto · 8 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_paws_n_claws.png" alt="Centro veterinario"></div>
+    <figcaption><b>Centro veterinario</b><span>≈ 5 m de alto · 8 m de ancho</span><small>Mismo edificio; la parcela gana el borde dorado del nivel 2.</small></figcaption></figure></div></div></div>
+  </section><section class="page role n1">
+    <header><span class="kicker">Rol 7 de 12</span><h2><span class="ico">🚇</span>Movilidad</h2>
+      <p class="lede">Diseña el transporte público para 20 habitantes. <b>El mismo edificio en todas sus islas.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Little Tokyo</span><span>Industrial</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_subway.png" alt="Estación de metro"></div>
+    <figcaption><b>Estación de metro</b><span>≈ 4 m de alto · 6 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_clock_tower.png" alt="Estación central"></div>
+    <figcaption><b>Estación central</b><span>≈ 8 m de alto · 2 m de ancho</span></figcaption></figure></div></div></div>
+  </section><section class="page role n2">
+    <header><span class="kicker">Rol 8 de 12</span><h2><span class="ico">🛎️</span>Hotelera</h2>
+      <p class="lede">Diseña un alojamiento para visitantes de una ciudad de 20 habitantes. <b>2 versiones según la isla.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Barrio parisino</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/french_tallhouse_02.png" alt="Pensión"></div>
+    <figcaption><b>Pensión</b><span>≈ 13 m de alto · 7 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_hotel.png" alt="Hotel"></div>
+    <figcaption><b>Hotel</b><span>≈ 10 m de alto · 7 m de ancho</span></figcaption></figure></div></div><div class="variant"><div class="islands"><span>Little Tokyo</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/japanese_house_02.png" alt="Ryokan"></div>
+    <figcaption><b>Ryokan</b><span>≈ 13 m de alto · 9 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_hotel.png" alt="Hotel"></div>
+    <figcaption><b>Hotel</b><span>≈ 10 m de alto · 7 m de ancho</span></figcaption></figure></div></div></div>
+  </section><section class="page role n1">
+    <header><span class="kicker">Rol 9 de 12</span><h2><span class="ico">🛒</span>Comerciante</h2>
+      <p class="lede">Diseña un mercado de barrio para una ciudad de 20 habitantes. <b>El mismo edificio en todas sus islas.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Barrio parisino</span><span>Granja</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/french_fruitstand.png" alt="Frutería"></div>
+    <figcaption><b>Frutería</b><span>≈ 4 m de alto · 19 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_building_03.png" alt="Mercado"></div>
+    <figcaption><b>Mercado</b><span>≈ 9 m de alto · 6 m de ancho</span></figcaption></figure></div></div></div>
+  </section><section class="page role n1">
+    <header><span class="kicker">Rol 10 de 12</span><h2><span class="ico">💈</span>Peluquera</h2>
+      <p class="lede">Diseña una peluquería para los 20 habitantes de la ciudad. <b>El mismo edificio en todas sus islas.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Barrio parisino</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/french_barbers_shop.png" alt="Barbería"></div>
+    <figcaption><b>Barbería</b><span>≈ 8 m de alto · 8 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_building_04.png" alt="Salón de belleza"></div>
+    <figcaption><b>Salón de belleza</b><span>≈ 9 m de alto · 6 m de ancho</span></figcaption></figure></div></div></div>
+  </section><section class="page role n1">
+    <header><span class="kicker">Rol 11 de 12</span><h2><span class="ico">💼</span>Empresaria</h2>
+      <p class="lede">Diseña un espacio de oficinas compartidas para 20 habitantes. <b>El mismo edificio en todas sus islas.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Little Tokyo</span><span>Industrial</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/city_building_01.png" alt="Oficina"></div>
+    <figcaption><b>Oficina</b><span>≈ 9 m de alto · 11 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/city_building_02.png" alt="Torre de oficinas"></div>
+    <figcaption><b>Torre de oficinas</b><span>≈ 7 m de alto · 6 m de ancho</span></figcaption></figure></div></div></div>
+  </section><section class="page role n1">
+    <header><span class="kicker">Rol 12 de 12</span><h2><span class="ico">🏭</span>Fabricante</h2>
+      <p class="lede">Diseña un taller que fabrique lo que necesitan 20 habitantes. <b>El mismo edificio en todas sus islas.</b></p></header>
+    <div class="variants"><div class="variant"><div class="islands"><span>Centro</span><span>Industrial</span></div>
+      <div class="pair"><figure class="card"><span class="lvl">Nivel 1</span><div class="pic"><img src="img/industrial_wearhouse_01.png" alt="Taller"></div>
+    <figcaption><b>Taller</b><span>≈ 13 m de alto · 20 m de ancho</span></figcaption></figure><div class="to">→</div><figure class="card up"><span class="lvl">Nivel 2</span><div class="pic"><img src="img/industrial_factory_01.png" alt="Fábrica"></div>
+    <figcaption><b>Fábrica</b><span>≈ 23 m de alto · 20 m de ancho</span></figcaption></figure></div></div></div>
+  </section></body></html>
