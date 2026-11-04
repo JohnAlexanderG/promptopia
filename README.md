@@ -68,6 +68,7 @@ La partida se ve en 3D con Three.js / React Three Fiber y los modelos low-poly d
 - **Pantalla completa:** durante la partida la ciudad ocupa toda la pantalla; arriba quedan la sala, el tiempo y la fase, y abajo una barra abre como paneles flotantes «Mi taller» o «Mesa del presentador», «Misión», «Actividad» y «Cómo se juega» (Esc o ✕ para cerrar).
 - **Monumentos:** calle comercial (Centro), torii y puente sobre un estanque (Little Tokyo), mercado y barbería (París), campos y silo (Granja), fábrica, torre de refrigeración y chimenea (Industrial).
 - **Ciudad viva:** palomas desde 5 edificios; la misión 1 enciende las farolas de la plaza, trae el atardecer y llena las calles de coches; la misión 2 pone en marcha el tren. En la Granja pasean los animales. Al cerrar, la cámara orbita para la foto final.
+- **Navegación 3D:** arrastrar gira 360°; clic derecho, Shift + arrastrar o dos dedos desplazan (sin salir de la ciudad); la rueda o el pellizco acercan hacia el cursor; las flechas desplazan y + / − acercan o alejan. Al tocar una parcela la cámara se desliza hasta ella; «Centrar» vuelve a la vista general.
 - **Accesibilidad:** las 36 parcelas tienen botones accesibles por teclado y lector de pantalla; las animaciones respetan el movimiento reducido y el lienzo se pausa con la pestaña oculta.
 
 Lee `docs/ARCHITECTURE.md` para decisiones, límites y plan incremental. Próximos pasos: ensayo con 36 dispositivos, fases guiadas, recuperación persistente y evaluación mediante IA opcional.
