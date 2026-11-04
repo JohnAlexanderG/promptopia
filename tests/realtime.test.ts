@@ -36,11 +36,13 @@ test(`transporte real: ${MAX_PLAYERS} ingresos concurrentes, difusión, reconexi
     const joined = await Promise.all(peers.map((peer, i) => request(peer, { action: 'join', code: created.room.code, name: `Persona ${i}`, role: 'urbanista' })));
     assert.equal(new Set((await full).room.players.map(p => p.plot)).size, MAX_PLAYERS);
     const extra = await client();
+    const peek = await new Promise<{ ok: boolean; district?: string; counts?: Record<string, number> }>(resolve => extra.emit('room:peek', created.room.code, resolve));
+    assert.deepEqual(peek, { ok: true, district: 'centro', counts: { urbanista: MAX_PLAYERS } }, 'peek cuenta roles sin revelar nombres');
     await assert.rejects(request(extra, { action: 'join', code: created.room.code, name: 'Extra', role: 'urbanista' }), new RegExp(`${MAX_PLAYERS} habitantes`));
     await assert.rejects(request(peers[0], { action: 'start' }), /presentador/);
     const started = waitFor(peers[1], s => s.room.phase === 'playing');
     await request(host, { action: 'start' }); await started;
-    await request(peers[0], { action: 'submit', prompt: 'Actúa como arquitecta. Diseña viviendas para 20 habitantes con presupuesto de 100. Responde en tabla.' });
+    await request(peers[0], { action: 'submit', prompt: `Actúa como arquitecta. Diseña viviendas para ${MAX_PLAYERS} habitantes con presupuesto de 100. Responde en tabla.` });
     const visible = waitFor(peers[1], s => Boolean(s.room.players[0].building));
     await request(peers[0], { action: 'build' }); const observer = await visible;
     assert.equal(observer.room.players[0].credits, 10); assert.equal(observer.prompt, '');

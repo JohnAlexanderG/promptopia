@@ -137,7 +137,7 @@ Esta es la idea central de la reunión. Cuatro piezas: rol, tarea con contexto, 
       <span class="kicker !mb-0 tx-green">Después</span>
       <span class="chip text-white bg-pgreen">4 / 4 piezas</span>
     </div>
-    <p class="text-[1.2rem] leading-[1.9] mt-5 flex-1 font-medium">«<span class="hl hl-green">Actúa como arquitecta.</span> <span class="hl hl-teal">Diseña viviendas para 20 habitantes</span> <span class="hl hl-coral">con un presupuesto máximo de 1000 créditos.</span> <span class="hl hl-gold">Preséntalo en una tabla con pasos y materiales</span>»</p>
+    <p class="text-[1.2rem] leading-[1.9] mt-5 flex-1 font-medium">«<span class="hl hl-green">Actúa como arquitecta.</span> <span class="hl hl-teal">Diseña viviendas para 36 habitantes</span> <span class="hl hl-coral">con un presupuesto máximo de 1000 créditos.</span> <span class="hl hl-gold">Preséntalo en una tabla con pasos y materiales</span>»</p>
     <div class="flex items-center gap-2 text-sm"><ph-check-circle-duotone class="text-xl tx-green" />Resultado: concreto, útil y listo para usar.</div>
   </div>
 </div>

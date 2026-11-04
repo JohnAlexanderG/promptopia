@@ -25,10 +25,18 @@ export function attachRealtime(io: Server, game = new Game()) {
       if (Date.now() - windowStart > 10_000) { requests = 0; windowStart = Date.now(); }
       if (++requests > 30) throw new GameError('Demasiadas acciones. Espera unos segundos.');
     }
-    // Lets the join form show only the roles of the room's district; reveals nothing else.
+    // Lets the join form show the room's district and how many people already took each role, so newcomers
+    // can spread out; reveals no names.
     socket.on('room:peek', (code: unknown, ack: unknown) => {
       if (typeof ack !== 'function') return;
-      try { limit(); ack(typeof code === 'string' && game.rooms.has(code) ? { ok: true, district: game.rooms.get(code)!.district } : { ok: false }); }
+      try {
+        limit();
+        const room = typeof code === 'string' ? game.rooms.get(code) : undefined;
+        if (!room) { ack({ ok: false }); return; }
+        const counts: Partial<Record<Role, number>> = {};
+        for (const p of room.players) counts[p.role] = (counts[p.role] ?? 0) + 1;
+        ack({ ok: true, district: room.district, counts });
+      }
       catch { ack({ ok: false }); }
     });
     socket.on('room:action', (raw: unknown, ack: unknown) => {

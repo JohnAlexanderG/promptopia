@@ -5,11 +5,13 @@ import { buildingName } from './catalog';
 export { evaluate } from './rubric';
 
 type Draft = { prompt: string; evaluation: ReturnType<typeof evaluate>; attempts: Attempt[]; first: ReturnType<typeof evaluate> };
-type Room = Omit<RoomState, 'serverNow'> & { hostToken: string; tokens: Map<string, string>; drafts: Map<string, Draft>; startedAt: number | null; touchedAt: number };
+type Room = Omit<RoomState, 'serverNow'> & { hostToken: string; tokens: Map<string, string>; drafts: Map<string, Draft>; startedAt: number | null; touchedAt: number;
+  /** Goal set when the current mission opened; the live goal only shrinks from it. */ eventGoal: number;
+  /** Names of the run of joins merged into the latest log line. */ joined: string[] };
 export class GameError extends Error {}
 function assert(condition: unknown, message: string): asserts condition { if (!condition) throw new GameError(message); }
 const token = () => randomBytes(24).toString('hex');
-const SESSION = 30 * 60_000, MAX_SESSION = 60 * 60_000, MAX_ATTEMPTS = 10;
+const SESSION = 30 * 60_000, MAX_SESSION = 60 * 60_000, MAX_ATTEMPTS = 10, LOG_SIZE = 50;
 export class Game {
   rooms = new Map<string, Room>();
   create(now = Date.now()): Session {
@@ -18,7 +20,7 @@ export class Game {
     let code: string;
     do { code = randomBytes(3).toString('hex').toUpperCase(); } while (this.rooms.has(code));
     const hostToken = token();
-    this.rooms.set(code, { code, hostToken, phase: 'lobby', district: 'centro', stage: 0, endsAt: null, startedAt: null, players: [], tokens: new Map(), drafts: new Map(), event: { index: 0, active: false, progress: 0, goal: 0, completed: 0 }, log: ['La ciudad está lista para recibir habitantes.'], touchedAt: now });
+    this.rooms.set(code, { code, hostToken, phase: 'lobby', district: 'centro', stage: 0, endsAt: null, startedAt: null, players: [], tokens: new Map(), drafts: new Map(), event: { index: 0, active: false, progress: 0, goal: 0, completed: 0 }, log: ['La ciudad está lista para recibir habitantes.'], touchedAt: now, eventGoal: 0, joined: [] });
     return { code, token: hostToken, kind: 'host' };
   }
   get(code: string): Room { const room = this.rooms.get(code); assert(room, 'La sala no existe o expiró.'); return room; }
@@ -35,7 +37,7 @@ export class Game {
     room.players.push({ id, name, role, plot, connected: false, credits: 20, score: 0, bonus: 0, attempts: 0, tier: 0, building: null, contributed: false });
     room.players.sort((a, b) => a.plot - b.plot);
     room.tokens.set(secret, id); room.touchedAt = Date.now();
-    this.log(room, `${name} se unió a la ciudad.`);
+    this.logJoin(room, name);
     return { code, token: secret, kind: 'player', playerId: id };
   }
   authorize(session: Session): { room: Room; player?: Player } {
@@ -63,7 +65,7 @@ export class Game {
       firstAverage: average(drafts.map(d => d.first.score)), lastAverage: average(drafts.map(d => d.evaluation.score)),
     };
   }
-  presence(session: Session, connected: boolean) { const { room, player } = this.authorize(session); if (player) player.connected = connected; room.touchedAt = Date.now(); }
+  presence(session: Session, connected: boolean) { const { room, player } = this.authorize(session); if (player) player.connected = connected; room.touchedAt = Date.now(); this.refreshEvent(room); }
   act(session: Session, action: string, payload?: unknown, now = Date.now()) {
     const { room, player } = this.authorize(session);
     if (room.phase === 'playing' && room.endsAt! <= now) { room.phase = 'finished'; this.log(room, '¡Tiempo! La ciudad termina su primera jornada.'); }
@@ -92,6 +94,7 @@ export class Game {
         room.players = room.players.filter(p => p !== target); room.drafts.delete(target.id);
         for (const [secret, id] of room.tokens) if (id === target.id) room.tokens.delete(secret);
         this.log(room, `La parcela ${target.plot + 1} quedó libre.`);
+        this.refreshEvent(room);
       } else if (action === 'event') {
         assert(room.phase === 'playing', 'Inicia la sesión primero.');
         const { event } = room;
@@ -99,7 +102,7 @@ export class Game {
         if (event.active) { assert(event.index < EVENTS.length - 1, 'La ciudad ya completó todos los eventos.'); event.index++; }
         // Everyone online who can still pay counts towards the goal, so nobody is left out.
         const able = room.players.filter(p => p.connected && p.credits >= CONTRIBUTION).length;
-        Object.assign(event, { active: true, progress: 0, goal: Math.max(1, able) * CONTRIBUTION });
+        Object.assign(event, { active: true, progress: 0, goal: Math.max(1, able) * CONTRIBUTION }); room.eventGoal = event.goal;
         for (const p of room.players) p.contributed = false;
         this.log(room, `Evento: ${EVENTS[event.index].title.toLowerCase()}. Meta: ${event.goal} créditos, un aporte por habitante.`);
       } else { assert(room.phase === 'playing', 'La sesión no está en curso.'); room.phase = 'finished'; this.log(room, 'El presentador cerró la sesión.'); }
@@ -135,7 +138,7 @@ export class Game {
       if (player.contributed || event.progress >= event.goal) return;
       assert(player.credits >= CONTRIBUTION, `Necesitas ${CONTRIBUTION} créditos.`);
       player.credits -= CONTRIBUTION; player.contributed = true; event.progress += CONTRIBUTION;
-      if (event.progress >= event.goal) { event.completed = event.index + 1; this.log(room, `${EVENTS[event.index].done} La ciudad logró la meta colectiva.`); }
+      if (event.progress >= event.goal) this.completeEvent(room);
       else this.log(room, `${player.name} aportó ${CONTRIBUTION} créditos: ${EVENTS[event.index].title.toLowerCase()}.`);
     } else throw new GameError('Acción desconocida.');
   }
@@ -145,5 +148,24 @@ export class Game {
     return changed;
   }
   cleanup(now = Date.now()) { for (const [code, room] of this.rooms) if (now - room.touchedAt > 2 * 60 * 60_000) this.rooms.delete(code); }
-  private log(room: Room, message: string) { room.log = [message, ...room.log].slice(0, 12); }
+  private log(room: Room, message: string) { room.joined = []; room.log = [message, ...room.log].slice(0, LOG_SIZE); }
+  /** Consecutive joins share one line («Ana, Beto y 5 más se unieron…»), so a full lobby does not flood the activity. */
+  private logJoin(room: Room, name: string) {
+    const run = [name, ...room.joined], [last, prev] = run;
+    const message = run.length === 1 ? `${last} se unió a la ciudad.` : run.length === 2 ? `${last} y ${prev} se unieron a la ciudad.` : `${last}, ${prev} y ${run.length - 2} más se unieron a la ciudad.`;
+    room.log = [message, ...room.log.slice(room.joined.length ? 1 : 0)].slice(0, LOG_SIZE);
+    room.joined = run;
+  }
+  /** Shrinks the open mission's goal to what the people still online can give, so a disconnection never blocks it. */
+  private refreshEvent(room: Room) {
+    const { event } = room;
+    if (!event.active || event.completed > event.index) return;
+    const pending = room.players.filter(p => p.connected && !p.contributed && p.credits >= CONTRIBUTION).length;
+    event.goal = Math.max(CONTRIBUTION, Math.min(room.eventGoal, event.progress + pending * CONTRIBUTION));
+    if (event.progress >= event.goal) this.completeEvent(room);
+  }
+  private completeEvent(room: Room) {
+    room.event.completed = room.event.index + 1;
+    this.log(room, `${EVENTS[room.event.index].done} La ciudad logró la meta colectiva.`);
+  }
 }

@@ -40,7 +40,7 @@ export default function HostPanel({ room, insights, disabled, act }: Props) {
       <button className="button secondary full" disabled={disabled || room.stage >= STAGES.length - 1} onClick={() => act('stage')}>{room.stage < STAGES.length - 1 ? <>Siguiente fase: {STAGES[room.stage + 1].label} <ChevronRight size={16} /></> : 'Última fase'}</button></div>}
     {room.phase !== 'lobby' && <div className="insights"><b>Aprendizaje en vivo</b><p className="subtle">{players ? `${players} jugadores evaluados · ${insights.attempts} intentos · media ${insights.firstAverage} → ${insights.lastAverage}/4` : 'Aún no hay prompts evaluados.'}</p>
       {insights.criteria.map(c => <div className="insight-bar" key={c.label}><span>{c.label}</span><meter min={0} max={Math.max(1, room.players.length)} value={c.passed} /><b>{c.passed}/{room.players.length}</b></div>)}
-      {insights.stuck.length > 0 && <p className="stuck"><TriangleAlert size={14} /> Necesitan ayuda: {insights.stuck.join(', ')}</p>}</div>}
+      {insights.stuck.length > 0 && <p className="stuck"><TriangleAlert size={14} /> Necesitan ayuda: {insights.stuck.slice(0, 5).join(', ')}{insights.stuck.length > 5 ? ` y ${insights.stuck.length - 5} más` : ''}</p>}</div>}
     {room.phase === 'finished' && <div className="button-row"><button className="button secondary" onClick={copy}><Copy size={16} /> Copiar resumen</button><button className="button primary" onClick={download}><Download size={16} /> Descargar .md</button></div>}
     {notice && <p className="small-note" role="status">{notice}</p>}
   </section>;
