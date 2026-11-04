@@ -12,6 +12,8 @@ export const EVENTS = [
   { title: 'Pongamos en marcha el tren', done: '¡El tren ya recorre la ciudad!' },
 ] as const;
 export const CONTRIBUTION = 5;
+/** Room capacity: one plot per player (9 blocks × 4 plots). */
+export const MAX_PLAYERS = 36;
 export type Check = { label: string; passed: boolean; hint: string; match?: string; advanced?: boolean };
 export type Evaluation = { score: number; bonus: number; checks: Check[] };
 export type Attempt = { prompt: string; score: number; bonus: number; at: number };

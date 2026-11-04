@@ -2,14 +2,15 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { Game, evaluate } from '../lib/game';
 import { ALL_ROLES, ALL_MODELS, ROLES } from '../lib/catalog';
+import { MAX_PLAYERS } from '../lib/types';
 import { existsSync, readdirSync, statSync } from 'node:fs';
 const good = 'Actúa como arquitecta. Diseña viviendas para 20 habitantes con presupuesto máximo de 1000 créditos. Responde en una tabla.';
 
-test('20 parcelas únicas, plaza 21 rechazada, roles y nombres validados', () => {
+test(`${MAX_PLAYERS} parcelas únicas, plaza ${MAX_PLAYERS + 1} rechazada, roles y nombres validados`, () => {
   const game = new Game(), host = game.create();
-  const players = Array.from({ length: 20 }, (_, i) => game.join(host.code, `Persona ${i}`, 'urbanista'));
-  assert.equal(new Set(players.map(s => game.authorize(s).player!.plot)).size, 20);
-  assert.throws(() => game.join(host.code, 'Extra', 'ingeniero'), /20 habitantes/);
+  const players = Array.from({ length: MAX_PLAYERS }, (_, i) => game.join(host.code, `Persona ${i}`, 'urbanista'));
+  assert.equal(new Set(players.map(s => game.authorize(s).player!.plot)).size, MAX_PLAYERS);
+  assert.throws(() => game.join(host.code, 'Extra', 'ingeniero'), new RegExp(`${MAX_PLAYERS} habitantes`));
   const empty = game.create();
   assert.throws(() => game.join(empty.code, 'Ana', 'toString' as never), /rol válido/);
   game.join(empty.code, 'Ana', 'urbanista');
