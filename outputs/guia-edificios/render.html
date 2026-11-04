@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style>
+<script type="importmap">{ "imports": { "three": "/node_modules/three/build/three.module.js", "three/addons/": "/node_modules/three/examples/jsm/" } }</script>
+</head><body>
+<script type="module">
+// Studio render of one pack model at a time, with the same camera angle as the game's 3D city.
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+const W = 800, H = 800;
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;
+document.body.appendChild(renderer.domElement);
+const loader = new GLTFLoader(), cache = new Map();
+const load = id => cache.get(id) ?? cache.set(id, loader.loadAsync(`/public/models/${id}.glb`)).get(id);
+
+window.renderModel = async (id, patch = 1) => {
+  const scene = new THREE.Scene();
+  scene.add(new THREE.HemisphereLight('#fffaf0', '#7fa98a', 1.15));
+  const sun = new THREE.DirectionalLight('#fff4e0', 2.1); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0005;
+  scene.add(sun, sun.target);
+  const gltf = await load(id), group = new THREE.Group(), step = 5.2;
+  for (let k = 0; k < patch * patch; k++) {
+    const copy = gltf.scene.clone(true);
+    copy.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    copy.position.set(((k % patch) - (patch - 1) / 2) * step, 0, (Math.floor(k / patch) - (patch - 1) / 2) * step);
+    group.add(copy);
+  }
+  scene.add(group);
+  const box = new THREE.Box3().setFromObject(group), size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
+  group.position.sub(new THREE.Vector3(center.x, box.min.y, center.z));
+  // Grass plot under the building, a little wider than its footprint, like a game plot.
+  const side = Math.max(size.x, size.z) * 1.25;
+  const plot = new THREE.Mesh(new THREE.BoxGeometry(side, 0.3, side), new THREE.MeshStandardMaterial({ color: '#86d059' }));
+  plot.position.y = -0.15; plot.receiveShadow = true; scene.add(plot);
+  const radius = new THREE.Vector3(side, size.y, side).length() / 2;
+  sun.position.set(radius * 1.1, radius * 2.2, radius * 0.7);
+  Object.assign(sun.shadow.camera, { left: -radius * 1.5, right: radius * 1.5, top: radius * 1.5, bottom: -radius * 1.5, far: radius * 8 });
+  sun.shadow.camera.updateProjectionMatrix();
+  const camera = new THREE.PerspectiveCamera(30, W / H, 0.1, radius * 20);
+  const dir = new THREE.Vector3(1, 0.8, 1).normalize(), target = new THREE.Vector3(0, size.y * 0.42, 0);
+  const dist = radius / Math.sin(THREE.MathUtils.degToRad(30) / 2) * 0.86;
+  camera.position.copy(target).addScaledVector(dir, dist); camera.lookAt(target);
+  renderer.render(scene, camera);
+  return { png: renderer.domElement.toDataURL('image/png'), height: +size.y.toFixed(1), width: +Math.max(size.x, size.z).toFixed(1) };
+};
+window.ready = true;
+</script></body></html>
