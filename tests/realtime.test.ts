@@ -4,7 +4,7 @@ import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 import { io as connect, type Socket } from 'socket.io-client';
 import { attachRealtime } from '../lib/realtime';
-import type { Reply, Snapshot } from '../lib/types';
+import { MAX_PLAYERS, type Reply, type Snapshot } from '../lib/types';
 
 function request(client: Socket, data: Record<string, unknown>): Promise<Snapshot> {
   return new Promise((resolve, reject) => client.timeout(5000).emit('room:action', data, (err: Error | null, reply: Reply) => {
@@ -18,7 +18,7 @@ function waitFor(client: Socket, predicate: (s: Snapshot) => boolean): Promise<S
     client.on('room:state', listen);
   });
 }
-test('transporte real: 20 ingresos concurrentes, difusión, reconexión y permisos', async () => {
+test(`transporte real: ${MAX_PLAYERS} ingresos concurrentes, difusión, reconexión y permisos`, async () => {
   const server = createServer(), io = new Server(server), realtime = attachRealtime(io);
   const clients: Socket[] = [];
   try {
@@ -31,12 +31,12 @@ test('transporte real: 20 ingresos concurrentes, difusión, reconexión y permis
       return socket;
     }
     const host = await client(), created = await request(host, { action: 'create' });
-    const peers = await Promise.all(Array.from({ length: 20 }, client));
-    const full = waitFor(host, s => s.room.players.length === 20);
+    const peers = await Promise.all(Array.from({ length: MAX_PLAYERS }, client));
+    const full = waitFor(host, s => s.room.players.length === MAX_PLAYERS);
     const joined = await Promise.all(peers.map((peer, i) => request(peer, { action: 'join', code: created.room.code, name: `Persona ${i}`, role: 'urbanista' })));
-    assert.equal(new Set((await full).room.players.map(p => p.plot)).size, 20);
+    assert.equal(new Set((await full).room.players.map(p => p.plot)).size, MAX_PLAYERS);
     const extra = await client();
-    await assert.rejects(request(extra, { action: 'join', code: created.room.code, name: 'Extra', role: 'urbanista' }), /20 habitantes/);
+    await assert.rejects(request(extra, { action: 'join', code: created.room.code, name: 'Extra', role: 'urbanista' }), new RegExp(`${MAX_PLAYERS} habitantes`));
     await assert.rejects(request(peers[0], { action: 'start' }), /presentador/);
     const started = waitFor(peers[1], s => s.room.phase === 'playing');
     await request(host, { action: 'start' }); await started;
@@ -48,14 +48,14 @@ test('transporte real: 20 ingresos concurrentes, difusión, reconexión y permis
     peers[0].disconnect(); await offline;
     const returning = await client();
     const restored = await request(returning, { action: 'resume', session: joined[0].session });
-    assert.equal(restored.room.players.length, 20); assert.equal(restored.room.players[0].plot, 0);
+    assert.equal(restored.room.players.length, MAX_PLAYERS); assert.equal(restored.room.players[0].plot, 0);
     assert.equal(restored.evaluation?.score, 4); assert.equal(restored.room.players[0].credits, 10);
     await request(returning, { action: 'build' });
     assert.equal(realtime.game.snapshot(joined[0].session).room.players[0].credits, 10);
     const forged = await client();
     await assert.rejects(request(forged, { action: 'resume', session: { ...created.session, token: 'fake' } }), /Credencial/);
     const kicked = new Promise<void>(resolve => peers[2].once('room:kicked', () => resolve()));
-    const shrunk = waitFor(peers[3], s => s.room.players.length === 19);
+    const shrunk = waitFor(peers[3], s => s.room.players.length === MAX_PLAYERS - 1);
     await assert.rejects(request(peers[3], { action: 'kick', playerId: joined[2].session.playerId }), /presentador/);
     const hostView = await request(host, { action: 'kick', playerId: joined[2].session.playerId });
     await kicked; await shrunk;

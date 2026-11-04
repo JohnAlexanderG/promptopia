@@ -236,7 +236,7 @@ class: dark
 
 <div class="grid grid-cols-[0.95fr_1.05fr] gap-12 items-center mt-6">
   <div class="flex flex-col gap-5">
-    <div v-click class="flex items-center gap-4 border-b pb-4" style="border-color: rgba(255,255,255,.12)"><span class="serif text-6xl font-semibold w-28 shrink-0" style="color: var(--gold)">20</span><span class="text-base" style="color:#cfe3d8">jugadores, cada uno con un rol y una parcela</span></div>
+    <div v-click class="flex items-center gap-4 border-b pb-4" style="border-color: rgba(255,255,255,.12)"><span class="serif text-6xl font-semibold w-28 shrink-0" style="color: var(--gold)">36</span><span class="text-base" style="color:#cfe3d8">jugadores como máximo, cada uno con un rol y una parcela</span></div>
     <div v-click class="flex items-center gap-4 border-b pb-4" style="border-color: rgba(255,255,255,.12)"><span class="serif text-6xl font-semibold w-28 shrink-0" style="color: var(--coral)">4/4</span><span class="text-base" style="color:#cfe3d8">piezas en tu prompt para construir tu edificio</span></div>
     <div v-click class="flex items-center gap-4"><span class="serif text-6xl font-semibold w-28 shrink-0" style="color: #8fd0c9">30</span><span class="text-base" style="color:#cfe3d8">minutos para levantar juntos una ciudad</span></div>
   </div>
@@ -247,7 +247,7 @@ class: dark
 </div>
 
 <!--
-Ahora lo practicamos. Promptopia es un juego para 20 personas: cada una recibe un rol y una parcela. Si tu prompt cumple al menos 3 de las 4 piezas, construyes tu edificio. Así se ve la ciudad al terminar.
+Ahora lo practicamos. Promptopia es un juego para hasta 36 personas: cada una recibe un rol y una parcela. Si tu prompt cumple al menos 3 de las 4 piezas, construyes tu edificio. Así se ve la ciudad al terminar.
 -->
 
 ---

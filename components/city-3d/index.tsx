@@ -6,13 +6,13 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { useReducedMotion } from 'motion/react';
 import { ZoomIn, ZoomOut, LocateFixed, MousePointer2 } from 'lucide-react';
 import { DISTRICTS, AMBIENT, ROADS, FENCE, modelFor } from '@/lib/catalog';
-import { ROLES, type Player, type RoomState } from '@/lib/types';
+import { ROLES, MAX_PLAYERS, type Player, type RoomState } from '@/lib/types';
 import PlotInspector from '../plot-inspector';
 import CityWorld from './scene';
 import { url } from './models';
 
 // The camera orbits the middle of the city (between the plot blocks, the plaza and the power-plant block).
-const TARGET: [number, number, number] = [24, 0, 4], HOME: [number, number, number] = [TARGET[0] + 136, 124, TARGET[2] + 136];
+const TARGET: [number, number, number] = [24, 0, 26], HOME: [number, number, number] = [TARGET[0] + 185, 170, TARGET[2] + 185];
 type Props = { room: RoomState; me?: Player; onKick?: (playerId: string) => void; onWorkshop?: () => void; fallback: ReactNode };
 
 /** Falls back to the 2D city if WebGL or a model fails at runtime. */
@@ -50,14 +50,14 @@ function City({ room, me, onKick, onWorkshop }: Props) {
   const current = room.players.find(p => p.plot === selected);
   const built = room.players.filter(p => p.building).length;
   return <section className="world world-3d" aria-label={`Ciudad interactiva en 3D: ${district.label}`}>
-    <div className="world-top"><span><span className="live-orb" />{district.label.toUpperCase()}</span><span>{built}/20 edificios</span></div>
+    <div className="world-top"><span><span className="live-orb" />{district.label.toUpperCase()}</span><span>{built}/{MAX_PLAYERS} edificios</span></div>
     <div className="world-canvas">
       <Canvas shadows dpr={[1, 1.5]} frameloop={visible ? 'always' : 'never'} camera={{ position: HOME, fov: 30, near: 1, far: 1600 }} onPointerMissed={() => setSelected(null)} aria-hidden>
         <CityWorld room={room} me={me} selected={selected} hovered={hovered} onSelect={setSelected} onHover={setHovered} reduce={reduce} />
-        <OrbitControls ref={controls} makeDefault target={TARGET} enablePan={false} minDistance={50} maxDistance={330} minPolarAngle={0.45} maxPolarAngle={1.15}
+        <OrbitControls ref={controls} makeDefault target={TARGET} enablePan={false} minDistance={50} maxDistance={400} minPolarAngle={0.45} maxPolarAngle={1.15}
           minAzimuthAngle={finished ? -Infinity : 0} maxAzimuthAngle={finished ? Infinity : Math.PI / 2} autoRotate={finished && !reduce} autoRotateSpeed={0.5} />
       </Canvas>
-      <ul className="sr-only" aria-label="Parcelas de la ciudad">{Array.from({ length: 20 }, (_, i) => { const p = room.players.find(x => x.plot === i); return <li key={i}><button aria-pressed={selected === i} onFocus={() => setSelected(i)} onClick={() => setSelected(i)}>{`Parcela ${i + 1}: ${p ? `${p.name}, ${p.building ? `${p.building}${p.tier >= 2 ? ' nivel 2' : ''}` : `${ROLES[p.role].label}, por construir`}` : 'disponible'}`}</button></li>; })}</ul>
+      <ul className="sr-only" aria-label="Parcelas de la ciudad">{Array.from({ length: MAX_PLAYERS }, (_, i) => { const p = room.players.find(x => x.plot === i); return <li key={i}><button aria-pressed={selected === i} onFocus={() => setSelected(i)} onClick={() => setSelected(i)}>{`Parcela ${i + 1}: ${p ? `${p.name}, ${p.building ? `${p.building}${p.tier >= 2 ? ' nivel 2' : ''}` : `${ROLES[p.role].label}, por construir`}` : 'disponible'}`}</button></li>; })}</ul>
       <div className="world-controls"><span><MousePointer2 size={14} /> Arrastra para girar · toca una parcela</span><div>
         <button aria-label="Alejar ciudad" onClick={() => zoom(1.2)}><ZoomOut size={17} /></button>
         <button aria-label="Centrar ciudad" onClick={center}><LocateFixed size={17} /></button>

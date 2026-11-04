@@ -1,6 +1,6 @@
 # Promptopia
 
-MVP multijugador para aprender ingeniería de prompts en una charla por Google Meet: 20 jugadores, 20 parcelas y una ciudad compartida. Next.js + TypeScript + Tailwind + Socket.IO. Interfaz en español, sin cuentas ni claves de IA.
+MVP multijugador para aprender ingeniería de prompts en una charla por Google Meet: hasta 36 jugadores, 36 parcelas y una ciudad compartida. Next.js + TypeScript + Tailwind + Socket.IO. Interfaz en español, sin cuentas ni claves de IA.
 
 ## Ejecutar
 
@@ -32,7 +32,7 @@ No uses `next start`: el servidor incluido también aloja la sincronización. Un
 6. Abre el evento desde el presentador; aporta 5 créditos. La meta es 5 créditos por cada habitante en línea con saldo al abrirlo, así que participan todos; cada jugador aporta una vez por misión. Al completar «Iluminemos la plaza» el presentador puede abrir «Encendamos el faro».
 7. Recarga la pestaña del jugador: conserva parcela, nombre, créditos y evaluación. Desconecta/reconecta su red: se muestra estado de conexión y recupera su identidad sin ocupar otra plaza.
 8. Cierra la sesión desde el presentador: los jugadores ya no pueden evaluar, construir ni aportar. El reloj también la cierra a los 30 minutos.
-9. Para una prueba de capacidad, llena las 20 plazas antes de iniciar: el ingreso 21 debe fallar. Una plaza desconectada queda reservada; el presentador puede liberarla desde el inspector de la parcela («Liberar parcela»). Para cambiar de sala, vuelve al inicio y usa «Cambiar de sala» si tu sesión expiró; abrir una pestaña privada nueva permite una sesión independiente.
+9. Para una prueba de capacidad, llena las 36 plazas antes de iniciar: el ingreso 37 debe fallar. Una plaza desconectada queda reservada; el presentador puede liberarla desde el inspector de la parcela («Liberar parcela»). Para cambiar de sala, vuelve al inicio y usa «Cambiar de sala» si tu sesión expiró; abrir una pestaña privada nueva permite una sesión independiente.
 
 ## Verificaciones automatizadas
 
@@ -42,7 +42,7 @@ npm test
 npm run build
 ```
 
-Las pruebas cubren asignación única y límite de plazas, permisos, rúbrica (sinónimos, anti-trampa, criterios avanzados y pistas), historial, saldos, idempotencia, metas escaladas y misiones sucesivas, fases, +5 minutos, liberar parcela, datos de aprendizaje sin prompts, cierre y reconexión. La integración abre 20 clientes Socket.IO concurrentes contra un servidor real en un puerto local temporal y verifica difusión entre clientes y protección de credenciales.
+Las pruebas cubren asignación única y límite de plazas, permisos, rúbrica (sinónimos, anti-trampa, criterios avanzados y pistas), historial, saldos, idempotencia, metas escaladas y misiones sucesivas, fases, +5 minutos, liberar parcela, datos de aprendizaje sin prompts, cierre y reconexión. La integración abre 36 clientes Socket.IO concurrentes contra un servidor real en un puerto local temporal y verifica difusión entre clientes y protección de credenciales.
 
 ## Alcance
 
@@ -68,12 +68,12 @@ La partida se ve en 3D con Three.js / React Three Fiber y los modelos low-poly d
 - **Pantalla completa:** durante la partida la ciudad ocupa toda la pantalla; arriba quedan la sala, el tiempo y la fase, y abajo una barra abre como paneles flotantes «Mi taller» o «Mesa del presentador», «Misión», «Actividad» y «Cómo se juega» (Esc o ✕ para cerrar).
 - **Monumentos:** calle comercial (Centro), torii y puente sobre un estanque (Little Tokyo), mercado y barbería (París), campos y silo (Granja), fábrica, torre de refrigeración y chimenea (Industrial).
 - **Ciudad viva:** palomas desde 5 edificios; la misión 1 enciende las farolas de la plaza, trae el atardecer y llena las calles de coches; la misión 2 pone en marcha el tren. En la Granja pasean los animales. Al cerrar, la cámara orbita para la foto final.
-- **Accesibilidad:** las 20 parcelas tienen botones accesibles por teclado y lector de pantalla; las animaciones respetan el movimiento reducido y el lienzo se pausa con la pestaña oculta.
+- **Accesibilidad:** las 36 parcelas tienen botones accesibles por teclado y lector de pantalla; las animaciones respetan el movimiento reducido y el lienzo se pausa con la pestaña oculta.
 
-Lee `docs/ARCHITECTURE.md` para decisiones, límites y plan incremental. Próximos pasos: ensayo con 20 dispositivos, fases guiadas, recuperación persistente y evaluación mediante IA opcional.
+Lee `docs/ARCHITECTURE.md` para decisiones, límites y plan incremental. Próximos pasos: ensayo con 36 dispositivos, fases guiadas, recuperación persistente y evaluación mediante IA opcional.
 
 ## Ciudad interactiva
 
-La interfaz usa Motion para animaciones de aparición y selección, y Lucide React para iconos y controles. La entrada incluye una isla de demostración: «Construir demo» anima una biblioteca sin modificar ninguna sala. Durante la partida, las 20 parcelas del escenario reflejan el estado del servidor; se seleccionan con clic, toque o teclado (Tab y Enter/Espacio). El inspector muestra propietario, rol, edificio, puntuación y créditos. «Mi taller» lleva al editor del jugador. El zoom cuenta con controles de acercar, alejar y centrar. Las animaciones respetan la preferencia de movimiento reducido del dispositivo.
+La interfaz usa Motion para animaciones de aparición y selección, y Lucide React para iconos y controles. La entrada incluye una isla de demostración: «Construir demo» anima una biblioteca sin modificar ninguna sala. Durante la partida, las 36 parcelas del escenario reflejan el estado del servidor; se seleccionan con clic, toque o teclado (Tab y Enter/Espacio). El inspector muestra propietario, rol, edificio, puntuación y créditos. «Mi taller» lleva al editor del jugador. El zoom cuenta con controles de acercar, alejar y centrar. Las animaciones respetan la preferencia de movimiento reducido del dispositivo.
 
 Tras cambiar el código, vuelve a compilar y reinicia el servidor de producción (`npm run build` y `npm start`). Para revisar otra versión sin detener una sala en curso, usa `PORT=3001 npm start` después de compilar. Las salas de servidores distintos son independientes.

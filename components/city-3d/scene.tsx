@@ -3,10 +3,10 @@ import { Suspense, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import type { Group } from 'three';
 import { DISTRICTS, AMBIENT, ROADS, FENCE, PATCHES, RESERVED, modelFor, buildingName } from '@/lib/catalog';
-import type { Player, RoomState } from '@/lib/types';
+import { MAX_PLAYERS, type Player, type RoomState } from '@/lib/types';
 import { Model, Rise, Label, Scatter, WORLD, PLOT, CELL, COLS, ROWS, TILE_SCALE, ROAD_Y, GROUND_Y, PARK, RESERVED_CELL, cellCenter, plotPosition, type Placement } from './models';
 
-const ISLAND = { x: 8, z: -2, width: 250, depth: 160 }, TRACK_Z = -70, R = Math.PI / 2;
+const ISLAND = { x: 8, z: 20, width: 250, depth: 204 }, TRACK_Z = -70, R = Math.PI / 2;
 const TILE_Y = ROAD_Y - 2 * TILE_SCALE, PLOT_TOP = GROUND_Y + 0.3;
 
 // Road network: every cell on an even row or column; the odd/odd cells are blocks, and the reserved cell joins two of them.
@@ -35,7 +35,7 @@ const CITY = (() => {
   }
   return { tiles: [...tiles], straights, crossings };
 })();
-const DECOR_SPOTS: [number, number][] = [-104, -88, -72, -56, -40, -24, -8, 8, 24, 40, 56, 72, 88, 104].flatMap(x => [[x, -61], [x + 6, 62]] as [number, number][]);
+const DECOR_SPOTS: [number, number][] = [-104, -88, -72, -56, -40, -24, -8, 8, 24, 40, 56, 72, 88, 104].flatMap(x => [[x, -61], [x + 6, 106]] as [number, number][]);
 // Trees and benches around the plaza block, like the parks in the pack renders.
 const PARK_ITEMS: [string, number, number, number][] = [['city_tree', -13, -13, 0], ['city_tree', 13, -13, 1], ['city_tree', -13, 13, 2], ['city_tree', 13, 13, 3], ['city_tree', 0, -14, 1], ['city_tree', -14, 0, 2], ['city_bench', -10, -4, R], ['city_bench', 10, 4, -R], ['city_bench', 4, 13, Math.PI]];
 const GARDEN = [[-1, 1], [1, -1], [1, 1], [-1, -1]];
@@ -80,13 +80,13 @@ export default function CityWorld({ room, me, selected, hovered, onSelect, onHov
     <color attach="background" args={[plaza ? '#f6c98f' : '#43cff2']} />
     <hemisphereLight args={['#fffaf0', '#7fa98a', plaza ? 0.75 : 1.15]} />
     <directionalLight position={[110, 160, 70]} intensity={plaza ? 1.4 : 2.1} color={plaza ? '#ffc58f' : '#fff4e0'} castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0005}
-      shadow-camera-left={-150} shadow-camera-right={150} shadow-camera-top={130} shadow-camera-bottom={-130} shadow-camera-far={450} />
+      shadow-camera-left={-150} shadow-camera-right={150} shadow-camera-top={160} shadow-camera-bottom={-160} shadow-camera-far={450} />
     <Island ground={district.ground} />
     <Clouds reduce={reduce} />
     <Suspense fallback={null}>
       {CITY.tiles.map(([model, items]) => <Scatter key={model} model={model} items={items} />)}
     </Suspense>
-    {Array.from({ length: 20 }, (_, index) => <Plot key={index} index={index} player={room.players.find(p => p.plot === index)} mine={me?.plot === index} selected={selected === index} hovered={hovered === index} district={room.district} onSelect={onSelect} onHover={onHover} reduce={reduce} />)}
+    {Array.from({ length: MAX_PLAYERS }, (_, index) => <Plot key={index} index={index} player={room.players.find(p => p.plot === index)} mine={me?.plot === index} selected={selected === index} hovered={hovered === index} district={room.district} onSelect={onSelect} onHover={onHover} reduce={reduce} />)}
     <Suspense fallback={null}>
       {street.map(([model, items]) => <Scatter key={model} model={model} items={items} />)}
       {FENCE.panels.map((model, i) => <Scatter key={model} model={model} items={fences.panels[i]} />)}
@@ -197,7 +197,7 @@ function Traffic({ cars, reduce }: { cars: number; reduce: boolean }) {
   // One lane per vehicle on the east–west roads; each loops along x. The middle road ends at the reserved block.
   const [west, east, middle] = [cellCenter(0, 0)[0], cellCenter(COLS - 1, 0)[0], cellCenter(RESERVED_CELL[0] - 1, 0)[0]];
   const lanes: { model: string; z: number; dir: 1 | -1; offset: number; from: number; to: number }[] = [
-    { model: 'city_school_bus', z: -2 * CELL + 1.35, dir: 1, offset: 0, from: west, to: east }, { model: 'city_car', z: 2 * CELL - 1.35, dir: -1, offset: 40, from: west, to: east },
+    { model: 'city_school_bus', z: -2 * CELL + 1.35, dir: 1, offset: 0, from: west, to: east }, { model: 'city_car', z: 4 * CELL - 1.35, dir: -1, offset: 40, from: west, to: east },
     { model: 'city_car_blue', z: -1.35, dir: -1, offset: 100, from: west, to: middle }, { model: 'city_car_orange', z: 1.35, dir: 1, offset: 60, from: west, to: middle },
   ];
   return <>{lanes.slice(0, cars).map(lane => <Vehicle key={lane.model} {...lane} reduce={reduce} />)}</>;

@@ -5,15 +5,15 @@ import { useGLTF } from '@react-three/drei';
 import { Box3, CanvasTexture, Matrix4, Quaternion, SRGBColorSpace, Vector3, type BufferGeometry, type Group, type InstancedMesh, type Material, type Mesh } from 'three';
 
 export const url = (id: string) => `/models/${id}.glb`;
-// The city is a 9 × 5 grid of pack road tiles at native size; the odd/odd cells are blocks of 2 × 2 plots, one of them a park.
-// The east column (i = 7) is one tall block reserved for the power plant, too big for a plot.
+// The city is a 9 × 7 grid of pack road tiles at native size; the odd/odd cells are blocks of 2 × 2 plots, one of them a park.
+// In the east column (i = 7), rows 1–3 are one tall block reserved for the power plant, too big for a plot; (7, 5) is an ordinary block.
 // WORLD is the one scale applied to every pack model, so buildings, cars and props keep the pack's relative sizes.
-export const WORLD = 1, TILE_SCALE = WORLD, CELL = 22 * TILE_SCALE, PLOT = 12, COLS = 9, ROWS = 5;
+export const WORLD = 1, TILE_SCALE = WORLD, CELL = 22 * TILE_SCALE, PLOT = 12, COLS = 9, ROWS = 7;
 /** Height of the asphalt (tiles are lowered so it sits just above the island) and of the verges/plot ground. */
 export const ROAD_Y = 0.25, GROUND_Y = ROAD_Y + 0.43 * TILE_SCALE;
-/** Column 3 stays at x = 0, so the plots, plaza and west landmarks keep their coordinates as the city grows east. */
-export const cellCenter = (i: number, j: number): [number, number] => [(i - 3) * CELL, (j - (ROWS - 1) / 2) * CELL];
-export const BLOCKS: [number, number][] = [[1, 1], [3, 1], [5, 1], [1, 3], [3, 3]], PARK: [number, number] = [5, 3];
+/** Column 3 stays at x = 0 and row 2 at z = 0 (the city grows south), so the plots, plaza and west landmarks keep their coordinates as the city grows east. */
+export const cellCenter = (i: number, j: number): [number, number] => [(i - 3) * CELL, (j - 2) * CELL];
+export const BLOCKS: [number, number][] = [[1, 1], [3, 1], [5, 1], [1, 3], [3, 3], [1, 5], [3, 5], [5, 5], [7, 5]], PARK: [number, number] = [5, 3];
 /** Cells (7, 1)–(7, 3) merged into one block: the road between them is left out. */
 export const RESERVED_CELL: [number, number] = [7, 2];
 const SLOTS: [number, number][] = [[-1, -1], [1, -1], [-1, 1], [1, 1]];

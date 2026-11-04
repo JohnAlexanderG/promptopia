@@ -1,5 +1,5 @@
 import { randomBytes, randomUUID } from 'node:crypto';
-import { ROLES, DISTRICTS, STAGES, EVENTS, CONTRIBUTION, type Role, type Player, type Attempt, type Insights, type RoomState, type Session, type Snapshot } from './types';
+import { ROLES, DISTRICTS, STAGES, EVENTS, CONTRIBUTION, MAX_PLAYERS, type Role, type Player, type Attempt, type Insights, type RoomState, type Session, type Snapshot } from './types';
 import { evaluate } from './rubric';
 import { buildingName } from './catalog';
 export { evaluate } from './rubric';
@@ -25,7 +25,7 @@ export class Game {
   join(code: string, name: string, role: Role): Session {
     const room = this.get(code);
     assert(room.phase === 'lobby', 'La sesión ya comenzó.');
-    assert(room.players.length < 20, 'La ciudad ya tiene sus 20 habitantes.');
+    assert(room.players.length < MAX_PLAYERS, `La ciudad ya tiene sus ${MAX_PLAYERS} habitantes.`);
     assert(name.length >= 2 && name.length <= 24, 'Usa un nombre de 2 a 24 caracteres.');
     assert(Object.hasOwn(ROLES, role), 'Selecciona un rol válido.');
     assert(DISTRICTS[room.district].roles.includes(role), `Ese rol no está disponible en ${DISTRICTS[room.district].label}.`);
